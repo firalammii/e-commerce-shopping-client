@@ -1,10 +1,6 @@
 import axiosInstance from 'axios'
-// const baseURL = 'http://localhost:3500';
-const baseURL = 'https://eco-server-thwo.onrender.com';
-
-// import { URL } from "./urls";
-// import { signOut } from "./api/auth_api";
-// import { store } from "../redux/store";
+const baseURL = 'http://localhost:3500';
+// const baseURL = 'https://eco-server-thwo.onrender.com';
 
 const axios = axiosInstance.create({
 	baseURL,

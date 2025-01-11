@@ -1,16 +1,16 @@
+import React from 'react';
 import { authSelector } from '@/api/slices/authSlice';
-import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, useLocation, } from 'react-router-dom';
 
 const CheckAuth = ({ children}) => {
-	// const {isAuthenticated, user} = useSelector(authSelector);
+	const { isAuthenticated, user } = useSelector(authSelector);
 	const location = useLocation();
 	
-	const isAuthenticated=true;
-	const user= {
-		role: 'admin'
-	}
+	// const isAuthenticated=true;
+	// const user= {
+	// 	role: 'admin'
+	// }
 
 	if(
 		!isAuthenticated && 
