@@ -138,9 +138,9 @@ button:focus-visible {
   }
 }
 
-.border {
-  /* border: 2px solid red; */
-}
+/* .border {
+  border: 2px solid red;
+} */
 .auto-fit{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px,1fr));

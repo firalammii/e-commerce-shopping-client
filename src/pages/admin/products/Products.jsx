@@ -46,11 +46,11 @@ const Products = () => {
 		setOpenAddProduct(false)
 	}
 	return (
-		<section className='m-5 border h-full overflow-auto rounded-xl '>
-			<div className='w-full sticky top-0 flex justify-end'>
+		<section className='m-5 border-t h-full overflow-auto rounded-xl '>
+			<div className='w-full mb-2 sticky top-0 flex justify-end'>
 				<Button onClick={handleOpenAddProduct}>Add New Product</Button>
 			</div>
-			<div className='auto-fit gap-3 w-full border'>
+			<div className='auto-fit gap-3 w-full'>
 				{
 					products.map((item, i)=> (
 						<Card className='' key={i}>
