@@ -1,36 +1,32 @@
 import React from 'react';
 import { authSelector } from '@/api/slices/authSlice';
 import { useSelector } from 'react-redux';
-import { Navigate, useLocation, } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate, } from 'react-router-dom';
+import { useToast } from '@/hooks/use-toast';
 
-const CheckAuth = ({ children}) => {
-	const { isAuthenticated, user } = useSelector(authSelector);
+const CheckAuth = (
+	{ isAuthenticated, user, children }
+) => {
+// const { isAuthenticated, user } = useSelector(authSelector);
 	const location = useLocation();
-	
-	// const isAuthenticated=true;
-	// const user= {
-	// 	role: 'admin'
-	// }
+	// console.log(location.pathname);
 
 	if(
-		!isAuthenticated && 
-		!(location.pathname.includes('login') || location.pathname.includes('register'))
-	) { console.log("not auth, navigates to other urls"); return <Navigate to='/auth/login' />}
+		!isAuthenticated && !location.pathname.includes('/auth')) {
+		console.log("not auth, navigating to other pages"); return <Navigate to='/auth/login' />;
+	}
 
 	if(
-		isAuthenticated && 
-		(location.pathname.includes('login') || location.pathname.includes('register'))
+		isAuthenticated && location.pathname.includes('/auth')
 	){
-		console.log("authed, navigates to login or register");
-		if (user?.role === 'admin')
-			return <Navigate to='/admin/dashboard' />
-		else return <Navigate to='/shop/home' />
+		console.log("authed, navigating to login or register");
+		return (user?.role === 'admin') ? (<Navigate to='/admin/dashboard' />) : (<Navigate to='/shop/home' />)
 	}
 	
 	if(
-		isAuthenticated &&
-		user?.role !== 'admin' &&
-		location.pathname.includes('admin')
+		isAuthenticated
+		&& location.pathname.includes('/admin')
+		&& user?.role !== 'admin'
 	) return <Navigate to='/unauth-page' />
 
 	if (

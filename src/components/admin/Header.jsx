@@ -14,8 +14,9 @@ const Header = ({ onOpenChange}) => {
 	}
 	return (
 		<header className='w-full border p-2 bg-background flex justify-between lg:justify-end border-b'>
-			<Button onClick={onOpenChange} className='flex lg:hidden'>
-				<Menu size={36} className='' />
+			<Button onClick={onOpenChange} className='block lg:hidden'>
+				<Menu size={36} />
+				<span className='sr-only'>Toggle Menu</span>
 			</Button>
 			<Button onClick={logout}>
 				<LogOut size={36} />

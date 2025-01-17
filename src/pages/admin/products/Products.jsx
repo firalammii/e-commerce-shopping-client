@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import AddProducts from './AddProducts';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { ShoppingCart } from 'lucide-react';
@@ -9,32 +9,32 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts, productsSelector } from '@/api/slices/admin/productSlice';
+import { prodResourceURL } from '@/api/axios';
 
-const products =[
-	{ title: 'shoe for sale', description: "This shoe is used for 5 years with any repair and replacement",
-		imageUrl: 'http://localhost:5173/../public/images/shoes1.jpg', price: 24.99, amount: 5, category:"Shoes",
-	},
-	{ title: 'shoe for sale', description: "This shoe is used for 5 years with any repair and replacement",
-		imageUrl: 'http://localhost:5173/../public/images/shoes1.jpg', price: 24.99, amount: 5, category:"Shoes",
-	},
-	{ title: 'shoe for sale', description: "This shoe is used for 5 years with any repair and replacement",
-		imageUrl: 'http://localhost:5173/../public/images/shoes1.jpg', price: 24.99, amount: 5, category:"Shoes",
-	},
-	{ title: 'shoe for sale', description: "This shoe is used for 5 years with any repair and replacement",
-		imageUrl: 'http://localhost:5173/../public/images/shoes1.jpg', price: 24.99, amount: 5, category:"Shoes",
-	},
-	{ title: 'shoe for sale', description: "This shoe is used for 5 years with any repair and replacement",
-		imageUrl: 'http://localhost:5173/../public/images/shoes1.jpg', price: 24.99, amount: 5, category:"Shoes",
-	},
-	{ title: 'shoe for sale', description: "This shoe is used for 5 years with any repair and replacement",
-		imageUrl: 'http://localhost:5173/../public/images/shoes1.jpg', price: 24.99, amount: 5, category:"Shoes",
-	},
-	{ title: 'shoe for sale', description: "This shoe is used for 5 years with any repair and replacement",
-		imageUrl: 'http://localhost:5173/../public/images/shoes1.jpg', price: 24.99, amount: 5, category:"Shoes",
-	},
-]
+const initialState = {
+	title: '',
+	description: '',
+	category: [],
+	amount: '',
+	brand: '',
+};
 const Products = () => {
-	const [openAddProduct, setOpenAddProduct] = useState(false)
+	const [openAddProduct, setOpenAddProduct] = useState(false);
+	const [searchTerm, setSearchTerm] = useState(initialState);
+	const products = useSelector(productsSelector);
+	const dispatch = useDispatch();
+	console.log(products);
+
+	useEffect(() => {
+		const urlParams = new URLSearchParams();
+		Object.entries(searchTerm).forEach(entry => urlParams.append([entry[0]], entry[[1]]));
+
+		const query = urlParams.toString();
+		dispatch(fetchProducts(query)).then((data) => console.log(data));
+	}, [])
+
 	const handleOpenAddProduct = ()=> {
 		// console.log("open")
 		setOpenAddProduct(true)
@@ -61,7 +61,9 @@ const Products = () => {
 								</div>
 							</CardHeader>
 							<CardContent>
-								<img src={item.imageUrl} className='rounded-lg object-contain' />
+								<div className='flex items-center justify-center border rounded-lg bg-muted'>
+									<img src={item.imageURL.includes('firebasestorage.googleapis.com/') ? item.imageURL : prodResourceURL + item.imageURL} className='w-48 h-32 object-contain ' />
+								</div>
 								<CardDescription className='mt-2'>
 									{item.description}
 								</CardDescription>

@@ -57,22 +57,38 @@ export const productsFormControls = [
 	{
 		name: 'category',
 		label: 'Category',
-		placeholder: 'Category',
+		placeholder: 'Select Category Keywords',
 		componentType: "select",
-		options: [{ value: "clothes" }, { value: "shoes" }, { value: "automobiles" }, { value: "perfumes" }, { value: "furniture" }, { value: "foods" }, { value: "medicine and drugs"}]
+		multiple: true,
+		options: [
+			{ label: "Clothes", value: "clothes" },
+			{ label: "Men", value: "men" },
+			{ label: "Women", value: "women" },
+			{ label: "Kids", value: "kids" },
+			{ label: "Sports", value: "sports" },
+			{ label: "Food & Beverages", value: "food & beverages" },
+			{ label: "Shoes", value: "shoes" }, { label: "Automobiles", value: "automobiles" }, { label: "Perfumes", value: "perfumes" }, { label: "Furniture", value: "furniture" }, { label: "Medicines & Drugs", value: "medicine & drugs" }
+
+		]
 	},
 	{
 		name: 'brand',
 		label: 'Brand',
-		placeholder: 'Enter Your Email',
+		placeholder: 'Select Brand',
 		componentType: "select",
 		options: [{ value: "nike" }, { value: "adidas" }, { value: "gucci" }, { value: "puma" }, { value: "dior"},]
 	},
-	
-	
+
 	{
 		name: 'price',
 		label: 'Price',
+		placeholder: '0',
+		componentType: "input",
+		type: "number",
+	},
+	{
+		name: 'salePrice',
+		label: 'Sale Price',
 		placeholder: '0',
 		componentType: "input",
 		type: "number",

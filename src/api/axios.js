@@ -1,5 +1,7 @@
 import axiosInstance from 'axios'
-const baseURL = 'http://localhost:3500';
+const baseURL = 'http://localhost:3500/api';
+const prodResourceURL = 'http://localhost:3500/images/products/';
+
 // const baseURL = 'https://eco-server-thwo.onrender.com';
 
 const axios = axiosInstance.create({
@@ -44,4 +46,4 @@ const axiosInterceptor = axiosInstance.create({
 // 		return Promise.reject(error);
 // 	});
 
-export { axios, axiosInterceptor, baseURL };
+export { axios, axiosInterceptor, baseURL, prodResourceURL };

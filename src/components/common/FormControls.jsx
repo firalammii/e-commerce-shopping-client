@@ -1,15 +1,33 @@
-import React from 'react'
+import React, { useEffect } from 'react';
+
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { Textarea } from '../ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import MultipleSelector from '../ui/multiple-selector';
 
 const FormControls = ({ formControls, formData, setFormData }) => {
-	const handleChange=(e)=>{
-		setFormData({...formData, [e.target.id]: e.target.value})
-	}
 
-	const renderFormControl =(formControl) =>{
+	const handleChange = (e) => {
+		setFormData({ ...formData, [e.target.id]: e.target.value });
+	};
+
+	const renderFormControl = (formControl) => {
+		if (formControl.multiple) {
+			return (
+				<MultipleSelector
+					value={formData[formControl.name]}
+					onChange={(selected) => setFormData({ ...formData, [formControl.name]: selected })}
+					defaultOptions={formControl.options}
+					placeholder={formControl.placeholder}
+					emptyIndicator={
+						<p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+							no selection found.
+						</p>
+					}
+				/>
+			);
+		}
 		switch (formControl.componentType) {
 			case 'input': {
 				return (
@@ -17,7 +35,7 @@ const FormControls = ({ formControls, formData, setFormData }) => {
 						id={formControl.name}
 						type={formControl.type}
 						placeholder={formControl.placeholder}
-						value={FormData[formControl.name]}
+						value={formData[formControl.name]}
 						onChange={handleChange}
 					/>
 				);
@@ -29,7 +47,7 @@ const FormControls = ({ formControls, formData, setFormData }) => {
 						type={formControl.type}
 						rows={formControl.rows}
 						placeholder={formControl.placeholder}
-						value={FormData[formControl.name]}
+						value={formData[formControl.name]}
 						onChange={handleChange}
 						className='resize-none'
 					>
@@ -39,12 +57,15 @@ const FormControls = ({ formControls, formData, setFormData }) => {
 			
 			case 'select': {
 				return (
-					<Select 
-						key={formControl.name}
+					<Select
 						id={formControl.name}
-						value={FormData[formControl.name]}
-						onValueChange={handleChange}
-					> 
+						key={formControl.name}
+						multiple={formControl.multiple}
+						defaultValue={formControl.options[1]}
+						value={formData[formControl.name]}
+						// onValueChange={(value) => console.log(value)}
+						onValueChange={(value) => setFormData({ ...formData, [formControl.name]: value })}
+					>
 					<SelectTrigger>
 						<SelectValue placeholder={formControl.placeholder} />
 					</SelectTrigger>
@@ -52,7 +73,7 @@ const FormControls = ({ formControls, formData, setFormData }) => {
 						{
 							formControl.options &&
 							formControl.options.length > 0 ?
-								formControl.options.map(optionItem => (<SelectItem  key={optionItem.value} value={optionItem.value} className='capitalize'>{optionItem.value}</SelectItem>))
+									formControl.options.map(optionItem => (<SelectItem key={optionItem.value} value={optionItem.value} name={formControl.name} className='capitalize'>{optionItem.value}</SelectItem>))
 							: null
 						}
 					</SelectContent>
@@ -64,9 +85,9 @@ const FormControls = ({ formControls, formData, setFormData }) => {
 					<Input
 						key={formControl.name}
 						id={formControl.name}
-						type={formData.type}
+						type={formControl.type}
 						placeholder={formControl.placeholder}
-						value={FormData[formControl.name]}
+						value={formData[formControl.name]}
 						onChange={handleChange}
 					/>
 				);
@@ -78,7 +99,7 @@ const FormControls = ({ formControls, formData, setFormData }) => {
 		formControls.map(formControl => {
 			return(
 				<div className='flex flex-col gap-1.5' key={formControl.name}>
-					<Label>{formControl.label}</Label>
+					<Label htmlFor={formControl.name} className='cursor-pointer'>{formControl.label}</Label>
 					{renderFormControl(formControl)}
 				</div>
 			)

@@ -19,16 +19,34 @@ function App() {
   const location = useLocation();
   const {toast} = useToast();
 
-  const {isAuthenticated,user, isLoading, error} = useSelector(authSelector)
+  const {
+    isAuthenticated, user,
+    isLoading, error } = useSelector(authSelector)
 
-  // console.log(location.pathname, isAuthenticated, user)
+  // const isAuthenticated = true;
+  // const user = {
+  //   role: 'admin'
+  // }
 
-  const from = location.state?.from || location.pathname;
+  const from = location.state?.from || location.pathname;  
+  console.log("pathname: ", from, "isAuth: ", isAuthenticated, "user: ", user, "error: ", error)
 
   useEffect(()=> {
+    console.log('useEffect call')
     dispatch(refreshUser())
-      .then(() => navigate(from, { replace: true }))
+      .then(({ payload }) => {
+        console.log("succ", payload);
+        if (!payload.success) {
+          toast({
+            title: "Authentication Failed",
+            description: payload.message,
+            variant: "destructive",
+          });
+          navigate('/auth/login');
+        } else navigate(from, { replace: true });
+      })
       .catch(({payload}) => {
+        console.log("error", payload)
         toast({
           title: "Authentication Failed",
           description: payload.message,
@@ -57,13 +75,13 @@ function App() {
           <Route path='unauth-page' element={<UnauthPage/>} />
         </Route>
 
-        <Route path='/auth' element={<CheckAuth children={<AuthLayout />} />}>
+        <Route path='/auth' element={<CheckAuth isAuthenticated={isAuthenticated} user={user} children={<AuthLayout />} />}>
           <Route index element={<Auth />} />
           <Route path='login' element={<Login />} />
           <Route path='register' element={<Register />} />
         </Route>
 
-        <Route path='/admin' element={<CheckAuth children={ <AdminLayout />}/> }>
+        <Route path='/admin' element={<CheckAuth isAuthenticated={isAuthenticated} user={user} children={<AdminLayout />} />}>
           <Route index element={<Admin />} />
           <Route path='dashboard' element={<Dashboard />} />
           <Route path='features' element={<Features />} />
@@ -72,7 +90,7 @@ function App() {
           <Route path='sales' element={<Sales />} />
         </Route>
 
-        <Route path='/shop' element={<CheckAuth children={<ShoppingLayout />}/> }>
+        <Route path='/shop' element={<CheckAuth isAuthenticated={isAuthenticated} user={user} children={<ShoppingLayout />} />}>
           <Route index element={<Admin />} />
           <Route path='home' element={<Dashboard />} />
           <Route path='features' element={<Features />} />

@@ -75,13 +75,13 @@ const Sidebar = ({openSidebar, onOpenChange}) => {
 
 			<div className='lg:hidden'>
 				<Sheet open={openSidebar} onOpenChange={onOpenChange}>
-					<SheetContent side="left" className='w-64' >
+					<SheetContent side="left" className='w-64 rounded-l-lg' >
 						<div className='flex flex-col gap-2'>
-							<SheetHeader className='border-b'>
+							<SheetHeader className='border-b mt-8 mb-5'>
 								<SheetTitle> 
 									<div
 										onClick={() => handleNavClick('/admin/dashboard')}
-										className="flex items-center gap-2 cursor-pointer mb-3"
+										className="flex items-center gap-2 cursor-pointer"
 									>
 										<UserCog size={iconSize} />
 										<h1 className="text-2xl font-extrabold">Admin Panel</h1>
