@@ -13,7 +13,7 @@ const FormControls = ({ formControls, formData, setFormData }) => {
 	};
 
 	const renderFormControl = (formControl) => {
-		if (formControl.multiple) {
+		if (Boolean(formControl.multiple)) {
 			return (
 				<MultipleSelector
 					value={formData[formControl.name]}
@@ -60,8 +60,6 @@ const FormControls = ({ formControls, formData, setFormData }) => {
 					<Select
 						id={formControl.name}
 						key={formControl.name}
-						multiple={formControl.multiple}
-						defaultValue={formControl.options[1]}
 						value={formData[formControl.name]}
 						// onValueChange={(value) => console.log(value)}
 						onValueChange={(value) => setFormData({ ...formData, [formControl.name]: value })}

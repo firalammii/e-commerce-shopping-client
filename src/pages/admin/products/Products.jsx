@@ -61,11 +61,14 @@ const Products = () => {
 								</div>
 							</CardHeader>
 							<CardContent>
-								<div className='flex items-center justify-center border rounded-lg bg-muted'>
-									<img src={item.imageURL.includes('firebasestorage.googleapis.com/') ? item.imageURL : prodResourceURL + item.imageURL} className='w-48 h-32 object-contain ' />
+								<div className='flex items-center p-1 justify-center border rounded-lg bg-muted'>
+									<img src={item.imageURL.includes('firebasestorage.googleapis.com/') ? item.imageURL : prodResourceURL + item.imageURL} className='w-36 h-40 rounded-lg object-contain ' />
 								</div>
 								<CardDescription className='mt-2'>
-									{item.description}
+									<div className='flex flex-col gap-3 '>
+										<p>{item.description}</p>
+										<span className={!item.brand ? 'hidden' : 'uppercase text-foreground py-1 px-4 bg-muted w-min'}>{item.brand}</span>
+									</div>
 								</CardDescription>
 								<CardFooter className='flex px-1 mt-3 justify-between text-foreground'>
 									<span>${item.price}</span>

@@ -56,6 +56,7 @@ const AddProducts = ({open, close}) => {
 	// 		);
 	// 	};
 
+	console.log(formData)
 	const handleImageUpload = (e) => {
 		axios.post('/admin/products/upload-image', { imageFile: e.target.files[0] }, { headers: { "Content-Type": "multipart/form-data" } })
 			.then(({ data }) => setFormData({ ...formData, imageURL: data.image.filename }))
@@ -71,20 +72,21 @@ const AddProducts = ({open, close}) => {
 			.then(({ payload }) => toast({
 				title: payload.success ? "Success" : "Error",
 				description: payload.message,
-				variant: payload.success ? "accent" : "destructive"
+				variant: payload.success ? "accent" : "destructive",
 			}))
 			.then(() => setFormData(initialState))
 			.then(() => setUploadErrorMsg(''));
 	};
 
 	const handleImageRemove = (e) => {
-		// delete from storage
-		setFormData({ ...formData, imageURL: '' });
+		axios.delete(`/admin/products/delete-image/${formData.imageURL}`)
+			.then(() => setFormData({ ...formData, imageURL: '' }))
+			.catch((err) => setUploadErrorMsg(err.message));
 	};
 
 	return (
 		<Sheet open={open} onOpenChange={close} >
-			<SheetContent side="right" className='overflow-auto'>
+			<SheetContent side="right" className='overflow-auto w-96'>
 				<SheetHeader>
 					<div>
 						<SheetTitle>
