@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import React, { useEffect, useState } from 'react';
 import AddProducts from './AddProducts';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+
 import { ShoppingCart } from 'lucide-react';
 import {
 	Tooltip,
@@ -12,17 +12,18 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, productsSelector } from '@/api/slices/admin/productSlice';
 import { prodResourceURL } from '@/api/axios';
+import { ProductCard } from '@/components/admin';
 
 const initialState = {
 	title: '',
-	description: '',
 	category: [],
 	amount: '',
-	brand: '',
+	brand: [],
 };
 const Products = () => {
-	const [openAddProduct, setOpenAddProduct] = useState(false);
+	const [openDialogue, setOpenDialogue] = useState(false);
 	const [searchTerm, setSearchTerm] = useState(initialState);
+	const [editProduct, setEditProduct] = useState(null);
 	const products = useSelector(productsSelector);
 	const dispatch = useDispatch();
 	console.log(products);
@@ -35,58 +36,40 @@ const Products = () => {
 		dispatch(fetchProducts(query)).then((data) => console.log(data));
 	}, [])
 
-	const handleOpenAddProduct = ()=> {
-		// console.log("open")
-		setOpenAddProduct(true)
+	useEffect(() => {
+		if (editProduct)
+			openAddProduct();
+	}, [editProduct]);
+
+	console.log(editProduct);
+	const openAddProduct = () => {
+		setOpenDialogue(true)
 	}
-	const handleAddToCart = ()=> {
-		console.log("add")
+	const handleEdit = (product) => {
+		console.log(product);
+		const category = product.category.map(item => ({ label: item, value: item }));
+
+		setEditProduct({ ...product, category: category });
 	}
 	const closeAddProduct = ()=> {
-		setOpenAddProduct(false)
+		setOpenDialogue(false)
 	}
 	return (
 		<section className='m-5 border-t h-full overflow-auto rounded-xl '>
 			<div className='w-full mb-2 sticky top-0 flex justify-end'>
-				<Button onClick={handleOpenAddProduct}>Add New Product</Button>
+				<Button onClick={openAddProduct}>Add New Product</Button>
 			</div>
 			<div className='auto-fit gap-3 w-full'>
 				{
-					products.map((item, i)=> (
-						<Card className='' key={i}>
-							<CardHeader >
-								<div className='flex justify-between items-center'>
-								<CardTitle className='capitalize'>{item.title} </CardTitle>
-								<span>{item.amount} pieces left</span>
-								</div>
-							</CardHeader>
-							<CardContent>
-								<div className='flex items-center p-1 justify-center border rounded-lg bg-muted'>
-									<img src={item.imageURL.includes('firebasestorage.googleapis.com/') ? item.imageURL : prodResourceURL + item.imageURL} className='w-36 h-40 rounded-lg object-contain ' />
-								</div>
-								<CardDescription className='mt-2'>
-									<div className='flex flex-col gap-3 '>
-										<p>{item.description}</p>
-										<span className={!item.brand ? 'hidden' : 'uppercase text-foreground py-1 px-4 bg-muted w-min'}>{item.brand}</span>
-									</div>
-								</CardDescription>
-								<CardFooter className='flex px-1 mt-3 justify-between text-foreground'>
-									<span>${item.price}</span>
-									<TooltipProvider>
-										<Tooltip>
-											<TooltipTrigger onClick={handleAddToCart} className='px-2' ><ShoppingCart size={30} /></TooltipTrigger>
-											<TooltipContent>
-												<p>Add to Cart</p>
-											</TooltipContent>
-										</Tooltip>
-									</TooltipProvider>
-								</CardFooter>
-							</CardContent>
-						</Card>
+					products.map((product) => (
+						<ProductCard key={product._id} item={product} handleEdit={() => handleEdit(product)} />
 					))
 				}
-				</div>
-			<AddProducts open={openAddProduct} close={closeAddProduct} />
+			</div>
+			{
+				openDialogue &&
+				<AddProducts editProduct={editProduct} open={openDialogue} close={closeAddProduct} />
+			}
 		</section>
 	)
 }

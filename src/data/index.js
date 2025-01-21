@@ -1,3 +1,29 @@
+export const brands = [
+	{ value: "nike" }, { value: "adidas" }, { value: "gucci" }, { value: "puma" }, { value: "dior" },
+];
+export const prodCategories = [
+	{ label: "Clothes", value: "clothes" },
+	{ label: "Health", value: "health" },
+	{ label: "Fitness", value: "fitness" },
+	{ label: "Bags", value: "bags" },
+	{ label: "Education", value: "education" },
+	{ label: "Electronics", value: "electronics" },
+	{ label: "Computer", value: "computer" },
+	{ label: "Mobile Phones", value: "mobile phones" },
+	{ label: "Watch", value: "watch" },
+	{ label: "Jewelry", value: "jewelry" },
+	{ label: "Men", value: "men" },
+	{ label: "Women", value: "women" },
+	{ label: "Kids", value: "kids" },
+	{ label: "Sports", value: "sports" },
+	{ label: "Food & Beverages", value: "food & beverages" },
+	{ label: "Shoes", value: "shoes" },
+	{ label: "Automobiles", value: "automobiles" },
+	{ label: "Perfumes", value: "perfumes" },
+	{ label: "Furniture", value: "furniture" },
+	{ label: "Medicines & Drugs", value: "medicine & drugs" }
+];
+
 export const registerFormControls = [
 	{
 		name: 'userName',
@@ -13,14 +39,14 @@ export const registerFormControls = [
 		componentType: "input",
 		type: "text",
 	},
-	{	
+	{
 		name: 'password',
 		label: 'Create Password',
 		placeholder: 'Enter a User Password',
 		componentType: "input",
 		type: "password",
 	},
-]
+];
 export const loginFormControls = [
 	{
 		name: "email",
@@ -51,7 +77,7 @@ export const productsFormControls = [
 		label: 'Description',
 		placeholder: 'write a description',
 		componentType: "textarea",
-		rows:5,
+		rows: 5,
 		type: "text",
 	},
 	{
@@ -60,31 +86,14 @@ export const productsFormControls = [
 		placeholder: 'Select Category Keywords',
 		componentType: "select",
 		multiple: true,
-		options: [
-			{ label: "Clothes", value: "clothes" },
-			{ label: "Health", value: "health" },
-			{ label: "Fitness", value: "fitness" },
-			{ label: "Bags", value: "bags" },
-			{ label: "Electronics", value: "electronics" },
-			{ label: "Computer", value: "computer" },
-			{ label: "Mobile Phones", value: "mobile phones" },
-			{ label: "Watch", value: "watch" },
-			{ label: "Jewelry", value: "jewelry" },
-			{ label: "Men", value: "men" },
-			{ label: "Women", value: "women" },
-			{ label: "Kids", value: "kids" },
-			{ label: "Sports", value: "sports" },
-			{ label: "Food & Beverages", value: "food & beverages" },
-			{ label: "Shoes", value: "shoes" }, { label: "Automobiles", value: "automobiles" }, { label: "Perfumes", value: "perfumes" }, { label: "Furniture", value: "furniture" }, { label: "Medicines & Drugs", value: "medicine & drugs" }
-
-		]
+		options: prodCategories,
 	},
 	{
 		name: 'brand',
 		label: 'Brand',
 		placeholder: 'Select Brand',
 		componentType: "select",
-		options: [{ value: "nike" }, { value: "adidas" }, { value: "gucci" }, { value: "puma" }, { value: "dior"},]
+		options: brands
 	},
 
 	{

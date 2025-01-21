@@ -2,11 +2,11 @@ import { fileUploader } from '@/api/fileUploader';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable, } from 'firebase/storage';
 
 import { app } from '../../../firebase';
-import { addProduct, addProductMulter } from '@/api/slices/admin/productSlice';
+import { addProduct, addProductMulter, updateProduct } from '@/api/slices/admin/productSlice';
 import { FormControls, ImageUploader } from '@/components/common';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { productsFormControls } from '@/config';
+import { productsFormControls } from '@/data';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useToast } from '@/hooks/use-toast';
@@ -19,11 +19,11 @@ const initialState = {
 	brand:'',
 	category: [],
 	price:'',
-	salePrice: '',
-	amount:'',
+	salePrice: 0,
+	amount: 1,
 }
-const AddProducts = ({open, close}) => {
-	const [formData, setFormData] = useState(initialState);
+const AddProducts = ({ editProduct, open, close }) => {
+	const [formData, setFormData] = useState({});
 	const [uploadPercentage, setUploadPercentage] = useState(0);
 	const [uploadErrorMsg, setUploadErrorMsg] = useState('');
 	const dispatch = useDispatch();
@@ -56,7 +56,14 @@ const AddProducts = ({open, close}) => {
 	// 		);
 	// 	};
 
-	console.log(formData)
+	useEffect(() => {
+		console.log(editProduct);
+		if (editProduct)
+			setFormData(editProduct);
+		else setFormData(initialState);
+
+	}, [])
+
 	const handleImageUpload = (e) => {
 		axios.post('/admin/products/upload-image', { imageFile: e.target.files[0] }, { headers: { "Content-Type": "multipart/form-data" } })
 			.then(({ data }) => setFormData({ ...formData, imageURL: data.image.filename }))
@@ -66,16 +73,29 @@ const AddProducts = ({open, close}) => {
 	const { toast } = useToast();
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		console.log(formData)
+
 		const product = { ...formData };
 		product.category = formData.category.map(({ value }) => value);
-		dispatch(addProduct(product))
-			.then(({ payload }) => toast({
-				title: payload.success ? "Success" : "Error",
-				description: payload.message,
-				variant: payload.success ? "accent" : "destructive",
-			}))
-			.then(() => setFormData(initialState))
-			.then(() => setUploadErrorMsg(''));
+		if (editProduct) {
+			dispatch(updateProduct(product))
+				.then(({ payload }) => toast({
+					title: payload.success ? "Success" : "Error",
+					description: payload.message,
+					variant: !payload.success && "destructive",
+				}))
+				.then(() => setFormData(initialState))
+				.then(() => setUploadErrorMsg(''));
+		}
+		else 
+			dispatch(addProduct(product))
+				.then(({ payload }) => toast({
+					title: payload.success ? "Success" : "Error",
+					description: payload.message,
+					variant: !payload.success && "destructive",
+				}))
+				.then(() => setFormData(initialState))
+				.then(() => setUploadErrorMsg(''));
 	};
 
 	const handleImageRemove = (e) => {
@@ -97,13 +117,13 @@ const AddProducts = ({open, close}) => {
 						</SheetDescription>
 						<ImageUploader imageURL={formData.imageURL} uploader={handleImageUpload} remover={handleImageRemove} dropHandler={handleImageUpload} />
 						<form className='w-full flex flex-col gap-3 mt-3' onSubmit={handleSubmit}>
-							<FormControls formControls={productsFormControls} formData={formData} setFormData={setFormData}  />
+							<FormControls formControls={productsFormControls} formData={formData} setFormData={setFormData} />
 							<div className='mt-5 w-full flex justify-end'>
 								<Button 
 									type="submit"
 									className='px-8'
 								>
-									Add Product
+									{editProduct ? "Update Product" : "Add Product"}
 								</Button>
 							</div>
 						</form>

@@ -18,7 +18,7 @@ const FormControls = ({ formControls, formData, setFormData }) => {
 				<MultipleSelector
 					value={formData[formControl.name]}
 					onChange={(selected) => setFormData({ ...formData, [formControl.name]: selected })}
-					defaultOptions={formControl.options}
+					options={formControl.options}
 					placeholder={formControl.placeholder}
 					emptyIndicator={
 						<p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
@@ -61,7 +61,6 @@ const FormControls = ({ formControls, formData, setFormData }) => {
 						id={formControl.name}
 						key={formControl.name}
 						value={formData[formControl.name]}
-						// onValueChange={(value) => console.log(value)}
 						onValueChange={(value) => setFormData({ ...formData, [formControl.name]: value })}
 					>
 					<SelectTrigger>

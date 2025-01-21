@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { loginFormControls } from '../../config';
+import { loginFormControls } from '../../data';
 import { FormControls } from '../../components/common';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -9,7 +9,7 @@ import { Header } from '@/components/auth';
 import { Button } from '@/components/ui/button';
 
 const initialState = {
-	email:'', password:''
+	email: 'firalammii@gmail.com', password: '123456'
 }
 const Login = () => {
 	const [formData, setFormData] = useState(initialState);
@@ -27,7 +27,8 @@ const Login = () => {
 					toast({
 						title: !payload.success ? "Login Failed" : "Logged In",
 						description: payload.message,
-						variant: !payload.success ? "destructive" : ""
+						variant: !payload.success ? "destructive" : "",
+						success: payload.success,
 					});
 					if (payload.success) {
 						const to = payload?.user?.role ==='admin'? "/admin/dashboard":"/shop/home";

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useToast } from '@/hooks/use-toast';
 import { FormControls } from '../../components/common';
-import { registerFormControls } from '../../config';
+import { registerFormControls } from '../../data';
 import { registerUser } from '../../api/slices/authSlice';
 import { Header } from '@/components/auth';
 import { Button } from '@/components/ui/button';

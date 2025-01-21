@@ -13,11 +13,11 @@ export function Toaster() {
 
   return (
     (<ToastProvider>
-      {toasts.map(function ({ id, title, description, action, ...props }) {
+      {toasts.map(function ({ id, title, description, action, success, ...props }) {
         return (
           (<Toast key={id} {...props}>
-            <div className="grid gap-1">
-              {title && <ToastTitle>{title}</ToastTitle>}
+            <div className={`flex flex-col gap-1 w-full z-50 ${success ? "bg-background" : ""}`}>
+              {title && <ToastTitle className='text-sm font-extrabold tracking-tighter'>{title}</ToastTitle>}
               {description && (
                 <ToastDescription>{description}</ToastDescription>
               )}
