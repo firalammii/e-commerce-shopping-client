@@ -7,22 +7,14 @@ import { useToast } from '@/hooks/use-toast';
 const CheckAuth = (
 	{ isAuthenticated, user, children }
 ) => {
-// const { isAuthenticated, user } = useSelector(authSelector);
 	const location = useLocation();
-	// console.log(location.pathname);
 
-	if(
-		!isAuthenticated && !location.pathname.includes('/auth')) {
-		console.log("not auth, navigating to other pages"); return <Navigate to='/auth/login' />;
-	}
+	if (!isAuthenticated && !location.pathname.includes('/auth'))
+		return <Navigate to='/auth/login' />
 
-	if(
-		isAuthenticated && location.pathname.includes('/auth')
-	){
-		console.log("authed, navigating to login or register");
+	if (isAuthenticated && location.pathname.includes('/auth')) 
 		return (user?.role === 'admin') ? (<Navigate to='/admin/dashboard' />) : (<Navigate to='/shop/home' />)
-	}
-	
+
 	if(
 		isAuthenticated
 		&& location.pathname.includes('/admin')

@@ -29,13 +29,10 @@ function App() {
   // }
 
   const from = location.state?.from || location.pathname;  
-  console.log("pathname: ", from, "isAuth: ", isAuthenticated, "user: ", user, "error: ", error)
 
-  useEffect(()=> {
-    console.log('useEffect call')
+  useEffect(() => {
     dispatch(refreshUser())
       .then(({ payload }) => {
-        console.log("succ", payload);
         if (!payload.success) {
           toast({
             title: "Authentication Failed",
@@ -57,13 +54,7 @@ function App() {
     },[dispatch]);
 
   if (isLoading) 
-    return (
-      // <section className='w-screen h-screen'> 
-      //   <h1 className='text-5xl text-red-400 tracking-widest'>Loading</h1>
-      // </section>
-      <Skeleton className="w-screen h-screen" />
-
-    )
+    return (<Skeleton className="w-screen h-screen" />)
 
   return (
     <section className='w-screen h-screen'>

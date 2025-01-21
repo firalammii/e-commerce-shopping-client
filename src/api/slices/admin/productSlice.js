@@ -11,7 +11,6 @@ const initialState = {
 export const fetchProducts = createAsyncThunk('products/fetch', async (query, thunkAPI) => {
 	try {
 		const { data } = await axios.get('/admin/products/?' + query);
-		console.log(data);
 		return data;
 	} catch (error) {
 		console.error(error);
@@ -21,7 +20,6 @@ export const fetchProducts = createAsyncThunk('products/fetch', async (query, th
 export const addProduct = createAsyncThunk('products/add', async (formData, thunkAPI) => {
 	try {
 		const { data } = await axios.post('/admin/products', formData);
-		console.log(data);
 		return data;
 	} catch (error) {
 		console.error(error);
@@ -31,7 +29,6 @@ export const addProduct = createAsyncThunk('products/add', async (formData, thun
 export const addProductMulter = createAsyncThunk('products/add', async (formData, thunkAPI) => {
 	try {
 		const { data } = await axios.post('/admin/products/multer', formData, { headers: { "Content-Type": "multipart/form-data" } });
-		console.log(data);
 		return data;
 	} catch (error) {
 		console.error(error);
@@ -42,7 +39,6 @@ export const addProductMulter = createAsyncThunk('products/add', async (formData
 export const updateProduct = createAsyncThunk('products/update', async (formData, thunkAPI) => {
 	try {
 		const { data } = await axios.put(`/admin/products/${formData._id}`, formData);
-		console.log(data);
 		return data;
 	} catch (error) {
 		console.error(error);
@@ -53,7 +49,6 @@ export const updateProduct = createAsyncThunk('products/update', async (formData
 export const deleteProduct = createAsyncThunk('products/delete', async (id, thunkAPI) => {
 	try {
 		const { data } = await axios.delete(`/admin/products/${id}`);
-		console.log(data);
 		return data;
 	} catch (error) {
 		console.error(error);

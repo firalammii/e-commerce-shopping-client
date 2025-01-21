@@ -45,7 +45,7 @@ const Products = () => {
 		Object.entries(searchTerm).forEach(entry => urlParams.append([entry[0]], entry[[1]]));
 
 		const query = urlParams.toString();
-		dispatch(fetchProducts(query)).then((data) => console.log(data));
+		dispatch(fetchProducts(query));
 	}, [])
 
 	const handleImageUpload = (e) => {
