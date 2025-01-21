@@ -57,7 +57,6 @@ const AddProducts = ({ editProduct, open, close }) => {
 	// 	};
 
 	useEffect(() => {
-		console.log(editProduct);
 		if (editProduct)
 			setFormData(editProduct);
 		else setFormData(initialState);
