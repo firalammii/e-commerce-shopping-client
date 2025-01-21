@@ -110,11 +110,18 @@ const Products = () => {
 			<div className='auto-fit gap-3 w-full'>
 				{
 					products.map((product) => (
-						<ProductCard key={product._id} item={product} handleEdit={() => handleEdit(product)} />
+						<ProductCard
+							key={product._id}
+							item={product}
+							handleEdit={() => handleEdit(product)}
+						/>
 					))
 				}
 			</div>
-			<Sheet open={openDialogue} onOpenChange={closeAddProduct} >
+			<Sheet
+				open={openDialogue}
+				onOpenChange={closeAddProduct}
+			>
 				<SheetContent side="right" className='overflow-auto w-96'>
 					<SheetHeader>
 						<div>
@@ -124,9 +131,21 @@ const Products = () => {
 							<SheetDescription>
 								Upload Image
 							</SheetDescription>
-							<ImageUploader imageURL={formData.imageURL} uploader={handleImageUpload} remover={handleImageRemove} dropHandler={handleImageUpload} />
-							<form className='w-full flex flex-col gap-3 mt-3' onSubmit={handleSubmit}>
-								<FormControls formControls={productsFormControls} formData={formData} setFormData={setFormData} />
+							<ImageUploader
+								imageURL={formData.imageURL}
+								uploader={handleImageUpload}
+								remover={handleImageRemove}
+								dropHandler={handleImageUpload}
+							/>
+							<form
+								className='w-full flex flex-col gap-3 mt-3'
+								onSubmit={handleSubmit}
+							>
+								<FormControls
+									formControls={productsFormControls}
+									formData={formData}
+									setFormData={setFormData}
+								/>
 								<div className='mt-5 w-full flex justify-end'>
 									<Button
 										type="submit"
