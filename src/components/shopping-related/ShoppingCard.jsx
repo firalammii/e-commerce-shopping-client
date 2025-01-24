@@ -6,10 +6,10 @@ import { prodResourceURL } from '@/api/axios';
 import { deleteProduct } from '@/api/slices/admin/productSlice';
 import { useToast } from '@/hooks/use-toast';
 import { FlexBetween, FlexCentered, FlexColumn } from '../common';
-import { MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal, ShoppingCart } from 'lucide-react';
 
-const ProductCard = ({ item, handleEdit, }) => {
-	const [seeDesc, setSeeDesc] = useState(false)
+const ShoppingCard = ({ item, handleEdit, }) => {
+	const [seeDesc, setSeeDesc] = useState(false);
 	const dispatch = useDispatch();
 	const { toast } = useToast();
 
@@ -63,13 +63,16 @@ const ProductCard = ({ item, handleEdit, }) => {
 				</CardDescription>
 			</CardContent>
 			<CardFooter className='flex flex-col gap-1 px-4 text-foreground'>
-				<FlexBetween>
-					<Button onClick={handleEdit}>Edit</Button>
-					<Button onClick={handleDelete}>{item?.deleted ? "Restore" : "Delete"}</Button>
-				</FlexBetween>
+				{/* <FlexBetween> */}
+				<Button className='w-full flex gap-5' onClick={handleEdit}>
+					<ShoppingCart />
+					<span>Add to Cart</span>
+				</Button>
+				{/* <Button onClick={handleDelete}>{item?.deleted ? "Restore" : "Delete"}</Button> */}
+				{/* </FlexBetween> */}
 			</CardFooter>
-		</Card>
+		</Card >
 	);
 };
 
-export default ProductCard;
+export default ShoppingCard;

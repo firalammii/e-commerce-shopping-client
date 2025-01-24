@@ -1,28 +1,149 @@
+import { LayoutDashboard, NotebookPen, ShoppingBasket } from "lucide-react";
+
 export const brands = [
 	{ value: "nike" }, { value: "adidas" }, { value: "gucci" }, { value: "puma" }, { value: "dior" },
 ];
 export const prodCategories = [
 	{ label: "Clothes", value: "clothes" },
-	{ label: "Health", value: "health" },
-	{ label: "Fitness", value: "fitness" },
 	{ label: "Bags", value: "bags" },
 	{ label: "Education", value: "education" },
 	{ label: "Electronics", value: "electronics" },
 	{ label: "Computer", value: "computer" },
 	{ label: "Mobile Phones", value: "mobile phones" },
-	{ label: "Watch", value: "watch" },
+	{ label: "Health", value: "health" },
+	{ label: "Fitness", value: "fitness" },
 	{ label: "Jewelry", value: "jewelry" },
+	{ label: "Watch", value: "watch" },
 	{ label: "Men", value: "men" },
 	{ label: "Women", value: "women" },
 	{ label: "Kids", value: "kids" },
+	{ label: "Shoes", value: "shoes" },
 	{ label: "Sports", value: "sports" },
 	{ label: "Food & Beverages", value: "food & beverages" },
-	{ label: "Shoes", value: "shoes" },
 	{ label: "Automobiles", value: "automobiles" },
 	{ label: "Perfumes", value: "perfumes" },
 	{ label: "Furniture", value: "furniture" },
 	{ label: "Medicines & Drugs", value: "medicine & drugs" }
 ];
+
+export const prodFilters = [
+	{ title: "category", options: prodCategories },
+	{ title: "brand", options: brands },
+];
+// export const prodFilters = {
+// 	category: prodCategories,
+// 	brands: brands,
+// };
+
+export const iconSize = {
+	small: 14,
+	medium: 24,
+};
+
+export const menuDataItems = [
+	{
+		label: "dashboard",
+		link: "/admin/dashboard",
+		icon: null,
+		active: false,
+		filters: []
+	},
+	{
+		label: "products",
+		link: "/admin/products",
+		icon: null,
+		active: false,
+		filters: prodFilters,
+	},
+	{
+		label: "orders",
+		link: "/admin/orders",
+		icon: null,
+		active: false,
+		filters: []
+	},
+	{
+		label: "sales",
+		link: "/admin/sales",
+		icon: null,
+		active: false,
+		filters: [
+		]
+	},
+	{
+		label: "features",
+		link: "/admin/features",
+		icon: null,
+		active: false,
+		filters: [
+
+		]
+	},
+];
+// export const menuDataItems = [
+// 	{
+// 		label: "dashboard",
+// 		link: "/admin/dashboard",
+// 		icon: null,
+// 		active: false,
+// 		filters: null
+// 	},
+// 	{
+// 		label: "products",
+// 		link: "/admin/products",
+// 		icon: null,
+// 		active: false,
+// 		filters: prodFilters,
+// 	},
+// 	{
+// 		label: "orders",
+// 		link: "/admin/orders",
+// 		icon: null,
+// 		active: false,
+// 		filters: null
+// 	},
+// 	{
+// 		label: "sales",
+// 		link: "/admin/sales",
+// 		icon: null,
+// 		active: false,
+// 		filters: null
+// 	},
+// 	{
+// 		label: "features",
+// 		link: "/admin/features",
+// 		icon: null,
+// 		active: false,
+// 		filters: [
+// 
+// 		]
+// 	},
+// ];
+
+export const initialFiltersData = {
+	category: [],
+	brand: [],
+	strict: false,
+};
+export const initialProductFormData = {
+	imageURL: '',
+	title: '',
+	description: '',
+	brand: '',
+	category: [],
+	price: '',
+	salePrice: 0,
+	amount: 1,
+};
+
+export const initialSearchState = {
+	title: '',
+	category: [],
+	amount: '',
+	brand: [],
+};
+
+
 
 export const registerFormControls = [
 	{

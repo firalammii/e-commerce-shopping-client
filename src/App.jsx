@@ -2,9 +2,9 @@ import { useEffect } from 'react'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Admin, AdminLayout, Dashboard, Features, Orders, Products, Sales } from './pages/admin';
+import { AdminLayout, Dashboard, Features, Orders, Products, Sales } from './pages/admin';
 import { Auth, AuthLayout, Login, Register } from './pages/auth';
-import { ShoppingLayout } from './pages/shopping-view';
+import { Listings, ShoppingLayout } from './pages/shopping-view';
 import { About, Home, NotFound, UnauthPage } from './pages';
 import { CheckAuth } from './components/common';
 
@@ -73,7 +73,7 @@ function App() {
         </Route>
 
         <Route path='/admin' element={<CheckAuth isAuthenticated={isAuthenticated} user={user} children={<AdminLayout />} />}>
-          <Route index element={<Admin />} />
+          <Route index element={<Dashboard />} />
           <Route path='dashboard' element={<Dashboard />} />
           <Route path='features' element={<Features />} />
           <Route path='orders' element={<Orders />} />
@@ -82,8 +82,8 @@ function App() {
         </Route>
 
         <Route path='/shop' element={<CheckAuth isAuthenticated={isAuthenticated} user={user} children={<ShoppingLayout />} />}>
-          <Route index element={<Admin />} />
-          <Route path='home' element={<Dashboard />} />
+          <Route index element={<Listings />} />
+          <Route path='home' element={<Listings />} />
           <Route path='features' element={<Features />} />
           <Route path='orders' element={<Orders />} />
           <Route path='products' element={<Products />} />

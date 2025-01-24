@@ -7,14 +7,14 @@ const AdminLayout = () => {
 	const handleOpenSidebar = () => setOpenSidebar(!openSidebar)
 	return (
 		<section className='w-full h-full flex'>
-			<aside className={openSidebar ? 'hidden' : 'flex'}>
+			<aside className={openSidebar ? 'hidden' : 'flex flex-1 lg:min-w-72 max-w-md lg:w-full border'}>
 				<Sidebar
 					openSidebar={openSidebar}
 					onOpenChange={handleOpenSidebar}
 				/>
 			</aside>
 
-			<main className='border w-full flex flex-col'>
+			<main className='w-full flex flex-col bg-muted'>
 				<Header onOpenChange={handleOpenSidebar} />
 				<Outlet />
 			</main>

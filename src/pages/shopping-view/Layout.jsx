@@ -1,13 +1,21 @@
-import React from 'react'
-import { ShoppingHeader } from '../../components/shopping-related';
+import React, { useState } from 'react';
+import { Outlet } from 'react-router-dom';
+import { ShoppingHeader, ShoppingSidebar } from '@/components/shopping-related';
 
 const ShoppingLayout = () => {
+	const [openSidebar, setOpenSidebar] = useState(true);
+	const handleOpenSidebar = () => setOpenSidebar(!openSidebar)
 	return (
-		<section>
-			<header>
+		<section className='h-screen flex overflow-auto'>
+			<aside className='sticky top-0'>
+				<ShoppingSidebar openSidebar={openSidebar} onOpenChange={handleOpenSidebar} />
+			</aside>
+			<div className='w-full' >
 				<ShoppingHeader />
-			</header>
-
+				<main className='p-4'>
+					<Outlet />
+				</main>
+			</div>
 		</section>
 	)
 }

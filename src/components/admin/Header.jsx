@@ -13,7 +13,7 @@ const Header = ({ onOpenChange}) => {
 		.then(({payload})=>toast({title: "Logout", description: payload?.message, variant: !payload?.success? "destructive": "" }));
 	}
 	return (
-		<header className='w-full border p-2 bg-background flex justify-between lg:justify-end border-b'>
+		<header className='w-full p-2 bg-background flex justify-between lg:justify-end border-b'>
 			<Button onClick={onOpenChange} className='block lg:hidden'>
 				<Menu size={36} />
 				<span className='sr-only'>Toggle Menu</span>

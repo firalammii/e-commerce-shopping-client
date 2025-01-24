@@ -111,3 +111,17 @@ h1 {
     grid-template-columns: repeat(auto-fit, minmax(0, 250px));
   gap:1rem;
 }
+.offscreen {
+  /* width: 48px; */
+  position: absolute;
+  left: -999;
+  z-index: -999;
+}
+
+.small {
+  width: 50px;
+}
+
+.hide {
+  display: none;
+}

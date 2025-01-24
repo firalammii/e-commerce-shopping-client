@@ -6,29 +6,13 @@ import { useToast } from '@/hooks/use-toast';
 
 import { ProductCard } from '@/components/admin';
 import { FormControls, ImageUploader } from '@/components/common';
-import { productsFormControls } from '@/data';
+import { initialProductFormData, initialSearchState, productsFormControls } from '@/data';
 import { addProduct, fetchProducts, productsSelector, updateProduct } from '@/api/slices/admin/productSlice';
+import { axios } from '@/api/axios';
 
-const initialFormData = {
-	imageURL: '',
-	title: '',
-	description: '',
-	brand: '',
-	category: [],
-	price: '',
-	salePrice: 0,
-	amount: 1,
-};
-
-const initialSearchState = {
-	title: '',
-	category: [],
-	amount: '',
-	brand: [],
-};
 
 const Products = () => {
-	const [formData, setFormData] = useState(initialFormData);
+	const [formData, setFormData] = useState(initialProductFormData);
 	const [searchTerm, setSearchTerm] = useState(initialSearchState);
 	const [editMode, setEditMode] = useState(false);
 	const [openDialogue, setOpenDialogue] = useState(false);
@@ -37,6 +21,7 @@ const Products = () => {
 	const [uploadErrorMsg, setUploadErrorMsg] = useState('');
 
 	const products = useSelector(productsSelector);
+	console.log(products)
 	const dispatch = useDispatch();
 	const { toast } = useToast();
 
@@ -58,15 +43,18 @@ const Products = () => {
 		e.preventDefault();
 		const product = { ...formData };
 		product.category = formData.category.map(({ value }) => value);
-		if (editProduct) {
+		if (editMode) {
 			dispatch(updateProduct(product))
-				.then(({ payload }) => toast({
+				.then(({ payload }) => {
+					toast({
 					title: payload.success ? "Success" : "Error",
 					description: payload.message,
 					variant: !payload.success && "destructive",
-				}))
-				.then(() => setFormData(initialState))
-				.then(() => setUploadErrorMsg(''));
+					});
+					setFormData(initialProductFormData);
+					setUploadErrorMsg('');
+					setOpenDialogue(false);
+				});
 		}
 		else
 			dispatch(addProduct(product))
@@ -98,12 +86,12 @@ const Products = () => {
 
 	const closeAddProduct = ()=> {
 		setOpenDialogue(false);
-		setFormData(initialFormData);
+		setFormData(initialProductFormData);
 		setEditMode(false)
 	}
 
 	return (
-		<section className='m-5 border-t h-full overflow-auto rounded-xl '>
+		<section className='m-4 h-full overflow-auto rounded-xl '>
 			<div className='w-full mb-2 sticky top-0 flex justify-end'>
 				<Button onClick={openAddProduct}>Add New Product</Button>
 			</div>
@@ -126,7 +114,7 @@ const Products = () => {
 					<SheetHeader>
 						<div>
 							<SheetTitle>
-								<p>Add New Product</p>
+								<p>{editMode ? "Edit Product" : "Add New Product"}</p>
 							</SheetTitle>
 							<SheetDescription>
 								Upload Image
@@ -150,6 +138,7 @@ const Products = () => {
 									<Button
 										type="submit"
 										className='px-8'
+										disabled={Object.values(formData).some(value => value === '')}
 									>
 										{editMode ? "Update Product" : "Add Product"}
 									</Button>
