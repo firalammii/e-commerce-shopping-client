@@ -12,7 +12,7 @@ const ShoppingLayout = () => {
 			</aside>
 			<div className='w-full' >
 				<ShoppingHeader />
-				<main className='p-4'>
+				<main className='p-4 overflow-hidden'>
 					<Outlet />
 				</main>
 			</div>

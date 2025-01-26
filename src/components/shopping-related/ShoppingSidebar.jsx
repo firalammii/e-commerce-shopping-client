@@ -20,6 +20,7 @@ const ShoppingSidebar = () => {
 	useEffect(() => {
 		const urlParams = new URLSearchParams();
 		Object.entries(filters).forEach(entry => {
+			if (entry[1].length)
 			urlParams.append(entry[0], entry[1]);
 		});
 		const searchTerm = urlParams.toString();

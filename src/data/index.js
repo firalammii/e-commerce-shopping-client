@@ -1,8 +1,15 @@
-import { LayoutDashboard, NotebookPen, ShoppingBasket } from "lucide-react";
+
+export const sortOptions = [
+	{ value: "price-asc", label: "Price: Asc" },
+	{ value: "price-desc", label: "Price: Desc" },
+	{ value: "title-atz", label: "Title: A to Z" },
+	{ value: "title-zta", label: "Title: Z to A" },
+];
 
 export const brands = [
-	{ value: "nike" }, { value: "adidas" }, { value: "gucci" }, { value: "puma" }, { value: "dior" },
+	{ value: "nike" }, { value: "adidas" }, { value: "gucci" }, { value: "puma" }, { value: "levi" }, { value: "sketchers" }, { value: "dior" },
 ];
+
 export const prodCategories = [
 	{ label: "Clothes", value: "clothes" },
 	{ label: "Bags", value: "bags" },
@@ -141,6 +148,7 @@ export const initialSearchState = {
 	category: [],
 	amount: '',
 	brand: [],
+	sortBy: ''
 };
 
 

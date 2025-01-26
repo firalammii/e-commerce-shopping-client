@@ -6,11 +6,11 @@ import { AdminLayout, Dashboard, Features, Orders, Products, Sales } from './pag
 import { Auth, AuthLayout, Login, Register } from './pages/auth';
 import { Listings, ShoppingLayout } from './pages/shopping-view';
 import { About, Home, NotFound, UnauthPage } from './pages';
-import { CheckAuth } from './components/common';
 
 import { authSelector, refreshUser } from './api/slices/authSlice';
 import { useToast } from './hooks/use-toast';
 import { Skeleton } from './components/ui/skeleton';
+import { CheckAuth } from './components/auth';
 
 function App() {
 

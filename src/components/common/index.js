@@ -1,4 +1,6 @@
-export { default as CheckAuth } from '../auth/CheckAuth';
+
+export { MyAvatar as Avatar } from './Avatar';
+export { default as Dropdown } from './Dropdown';
 export { FlexBetween } from './FlexComponents';
 export { FlexColumn } from './FlexComponents';
 export { FlexCentered } from './FlexComponents';
