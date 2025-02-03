@@ -6,14 +6,14 @@ import { useToast } from '@/hooks/use-toast';
 
 import { ProductCard } from '@/components/admin';
 import { FormControls, ImageUploader } from '@/components/common';
-import { initialProductFormData, initialSearchState, productsFormControls } from '@/data';
+import { initialFiltersData, initialProductFormData, productsFormControls } from '@/data';
 import { addProduct, fetchProducts, productsSelector, updateProduct } from '@/api/slices/admin/productSlice';
 import { axios } from '@/api/axios';
 
 
 const Products = () => {
 	const [formData, setFormData] = useState(initialProductFormData);
-	const [searchTerm, setSearchTerm] = useState(initialSearchState);
+	const [searchTerm, setSearchTerm] = useState(initialFiltersData);
 	const [editMode, setEditMode] = useState(false);
 	const [openDialogue, setOpenDialogue] = useState(false);
 

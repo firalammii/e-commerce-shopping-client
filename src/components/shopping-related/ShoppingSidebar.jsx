@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FilterXIcon, MenuIcon } from 'lucide-react';
 import { iconSize, initialFiltersData, prodFilters } from '@/data';
 import { FlexBetween } from '../common';
@@ -7,32 +7,46 @@ import { useDispatch } from 'react-redux';
 import { fetchProducts } from '@/api/slices/admin/productSlice';
 import { Button } from '../ui/button';
 
+const filtersFromSession = JSON.parse(sessionStorage.getItem('filters'))
 
 const ShoppingSidebar = () => {
 
 	const [shoppingSidebarItems, setShoppingSidebarItems] = useState(prodFilters);
-	const [filters, setFilters] = useState(initialFiltersData);
+	const [filters, setFilters] = useState(filtersFromSession || initialFiltersData);
 	const [strict, setStrict] = useState(false);
 
 	const navigate = useNavigate();
+	const location = useLocation();
 	const dispatch = useDispatch();
 
 	useEffect(() => {
+		const urlParams = new URLSearchParams(location.search);
+		const sortBy = urlParams.get('sortBy');
+		if (sortBy)
+			setFilters({ ...filters, sortBy: sortBy });
+	}, [location.search]);
+
+	useEffect(() => {
 		const urlParams = new URLSearchParams();
-		Object.entries(filters).forEach(entry => {
-			if (entry[1].length)
-			urlParams.append(entry[0], entry[1]);
+		Object.keys(filters).forEach(key => {
+			if (filters[key].length)
+				urlParams.append(key, filters[key]);
 		});
 		const searchTerm = urlParams.toString();
-		navigate(`/shop/home/?${searchTerm}`);
+		navigate(`${location.pathname}?${searchTerm}`);
 		dispatch(fetchProducts(searchTerm));
+		sessionStorage.setItem('filters', JSON.stringify(filters))
+
 	}, [filters]);
+
+	console.log(filters)
 
 	const clearFilters = (filter) => {
 		if (!filter)
 			setFilters(initialFiltersData);
 		else setFilters({ ...filters, [filter]: [] });
 	};
+
 	const handleSwitch = (e) => {
 		console.log(e);
 		setStrict(!strict);

@@ -1,13 +1,21 @@
 
 export const sortOptions = [
-	{ value: "price-asc", label: "Price: Asc" },
-	{ value: "price-desc", label: "Price: Desc" },
-	{ value: "title-atz", label: "Title: A to Z" },
-	{ value: "title-zta", label: "Title: Z to A" },
+	{ value: "salePrice-asc", label: "Price: Asc" },
+	{ value: "salePrice-desc", label: "Price: Desc" },
+	// { value: "title-asc", label: "Title: A to Z" },
+	// { value: "title-desc", label: "Title: Z to A" },
+	{ value: "createdAt-desc", label: "Date: newest" },
+	{ value: "createdAt-asc", label: "Date: oldest" },
 ];
 
 export const brands = [
-	{ value: "nike" }, { value: "adidas" }, { value: "gucci" }, { value: "puma" }, { value: "levi" }, { value: "sketchers" }, { value: "dior" },
+	{ value: "nike" },
+	{ value: "adidas" },
+	{ value: "gucci" },
+	{ value: "puma" },
+	{ value: "levi" },
+	{ value: "sketchers" },
+	{ value: "dior" },
 ];
 
 export const prodCategories = [
@@ -128,8 +136,11 @@ export const menuDataItems = [
 // ];
 
 export const initialFiltersData = {
+	title: '',
 	category: [],
+	amount: '',
 	brand: [],
+	sortBy: '',
 	strict: false,
 };
 export const initialProductFormData = {
@@ -141,14 +152,6 @@ export const initialProductFormData = {
 	price: '',
 	salePrice: 0,
 	amount: 1,
-};
-
-export const initialSearchState = {
-	title: '',
-	category: [],
-	amount: '',
-	brand: [],
-	sortBy: ''
 };
 
 

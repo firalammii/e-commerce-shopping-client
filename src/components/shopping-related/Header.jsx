@@ -9,7 +9,7 @@ import { currUserSelector, logoutUser } from '@/api/slices/authSlice';
 
 const ShoppingHeader = () => {
 	const currUser = useSelector(currUserSelector);
-	const avatarFb = currUser.userName[0].toUpperCase();
+	const avatarFb = currUser?.userName[0]?.toUpperCase();
 
 	const navigate = useNavigate();
 	const dispatch = useDispatch();

@@ -3,14 +3,24 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
 	products: [],
+	totalProds: 0,
 	isLoading: false,
 	error: null,
-
+	modalProduct: null,
 };
 
 export const fetchProducts = createAsyncThunk('products/fetch', async (query, thunkAPI) => {
 	try {
 		const { data } = await axios.get('/admin/products/?' + query);
+		return data;
+	} catch (error) {
+		console.error(error);
+		return thunkAPI.rejectWithValue(error.response?.data.message || error.message);
+	}
+});
+export const getProduct = createAsyncThunk('products/getProduct', async (id, thunkAPI) => {
+	try {
+		const { data } = await axios.get(`/admin/products/${id}`);
 		return data;
 	} catch (error) {
 		console.error(error);
@@ -70,10 +80,15 @@ const productSlice = createSlice({
 				state.isLoading = false;
 				state.error = payload?.success ? null : payload?.message;
 				state.products = payload?.success ? payload?.products : state.products;
+				state.totalProds = payload?.success ? payload?.totalProds : state.totalProds;
 			})
 			.addCase(fetchProducts.rejected, (state, { payload }) => {
 				state.error = payload?.message;
 				state.isLoading = false;
+			})
+			.addCase(getProduct.fulfilled, (state, { payload }) => {
+				state.isLoading = false;
+				state.modalProduct = payload?.product;
 			})
 			.addCase(addProduct.pending, (state) => {
 				state.isLoading = true;
@@ -144,4 +159,6 @@ const productSlice = createSlice({
 });
 
 export const productsSelector = (state) => state.products.products;
+export const prodSliceSelector = (state) => state.products;
+export const modalProductSelector = (state) => state.products.modalProduct;
 export default productSlice.reducer;
