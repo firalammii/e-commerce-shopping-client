@@ -5,12 +5,12 @@ import { prodResourceURL } from '@/api/axios';
 import { FlexBetween, FlexCentered, FlexColumn } from '../common';
 import { MoreHorizontal, ShoppingCart } from 'lucide-react';
 
-const ShoppingCard = ({ item, handleBuy, handleView }) => {
+const ShoppingCard = React.memo(({ added, item, handleAddToCart, handleView }) => {
 	const [seeDesc, setSeeDesc] = useState(false);
 
 	return (
-		<Card >
-			<CardHeader onClick={() => handleView(item._id)} className='cursor-pointer my-2'>
+		<Card title='click to view' >
+			<CardHeader onClick={handleView} className='cursor-pointer my-2'>
 				<FlexColumn className='gap-4'>
 					<FlexBetween className='flex justify-between items-center'>
 						<CardTitle className='capitalize'>{item?.title} </CardTitle>
@@ -44,13 +44,13 @@ const ShoppingCard = ({ item, handleBuy, handleView }) => {
 				</CardDescription>
 			</CardContent>
 			<CardFooter className='flex flex-col gap-1 px-4 text-foreground'>
-				<Button className='w-full flex gap-5' onClick={() => handleView(item._id)}>
+				<Button className={`w-full flex gap-5 ${added() ? 'bg-green-400' : "bg-black"}`} onClick={() => handleAddToCart(item)}>
 					<ShoppingCart />
-					<span>Add to Cart</span>
+					<span>{added() ? "Drop from Cart" : "Add to Cart"}</span>
 				</Button>
 			</CardFooter>
 		</Card >
 	);
-};
+});
 
 export default ShoppingCard;

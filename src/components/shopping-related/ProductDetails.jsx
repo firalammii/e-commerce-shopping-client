@@ -1,16 +1,15 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { StarIcon } from 'lucide-react';
 
-import { modalProductSelector } from '@/api/slices/admin/productSlice';
 import { Avatar, FlexCentered, FlexColumn } from '../common';
 import { prodResourceURL } from '@/api/axios';
+import { useSelector } from 'react-redux';
+import { modalProductSelector } from '@/api/slices/admin/productSlice';
 
-function ProductDetails ({ open, onOpenChange }) {
+const ProductDetails = React.memo(({ added, open, onOpenChange, handleAddToCart }) => {
+
 	const modalProduct = useSelector(modalProductSelector);
 
 	const reviews = modalProduct?.reviews?.map(review => {
@@ -83,21 +82,20 @@ function ProductDetails ({ open, onOpenChange }) {
 							</div>
 
 							<DialogFooter className='mt-auto'>
-								<div>
-									<Label htmlFor='amount-to-buy'>Amount</Label>
-									<Input id='amount-to-buy' />
-								</div>
-								<Button className='w-full self-end' type="submit">Add to Cart</Button>
-
+								<Button
+									onClick={() => handleAddToCart(modalProduct)}
+									className='w-full self-end'
+								>
+									{added(modalProduct?._id) ? "Drop from Cart" : "Add to Cart"}
+								</Button>
 							</DialogFooter>
 						</div>
 					</DialogHeader>
-
 				</div>
 			</DialogContent>
 		</Dialog>
 
 	);
-}
+})
 
 export default ProductDetails;

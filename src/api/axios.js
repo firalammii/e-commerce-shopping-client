@@ -1,8 +1,8 @@
 import axiosInstance from 'axios'
-// const baseURL = 'http://localhost:3500/api';
-// const prodResourceURL = 'http://localhost:3500/images/products/';
-const baseURL = 'https://eco-server-thwo.onrender.com/api';
-const prodResourceURL = 'https://eco-server-thwo.onrender.com/images/products/';
+const baseURL = 'http://localhost:3500/api';
+const prodResourceURL = 'http://localhost:3500/images/products/';
+// const baseURL = 'https://eco-server-thwo.onrender.com/api';
+// const prodResourceURL = 'https://eco-server-thwo.onrender.com/images/products/';
 
 
 const axios = axiosInstance.create({
