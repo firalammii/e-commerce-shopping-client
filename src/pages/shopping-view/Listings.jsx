@@ -1,7 +1,10 @@
+import { createOrder } from '@/api/slices/admin/ordersSlice';
 import { getProduct, prodSliceSelector, } from '@/api/slices/admin/productSlice';
+import { authSelector, currUserSelector } from '@/api/slices/authSlice';
 import { Dropdown, FlexBetween, FlexColumn } from '@/components/common';
 import { Orders, ProductDetails, ShoppingCard } from '@/components/shopping-related';
 import { Badge } from '@/components/ui/badge';
+import { Skeleton } from '@/components/ui/skeleton';
 import { sortOptions } from '@/data';
 import { useToast } from '@/hooks/use-toast';
 import { ArrowUpDown, ShoppingCart, } from 'lucide-react';
@@ -25,20 +28,13 @@ const Listings = () => {
 	}, [orders])
 
 	const { products, totalProds, isLoading, error } = useSelector(prodSliceSelector);
+	const currUser = useSelector(currUserSelector);
 
 	const handleSort = useCallback((e) => {
 		const urlParams = new URLSearchParams();
 		urlParams.append('sortBy', e.target.value);
 		navigate(`/shop/home/?${urlParams.toString()}`);
 	}, []);
-
-	const toggleOpenOrdersModal = useCallback(() => {
-		setOpenOrdersModal(!openOrdersModal);
-	}, [openOrdersModal]);
-
-	const toggleOpenProductModal = useCallback(() => {
-		setOpenProductModal(!openProductModal);
-	}, [openProductModal]);
 
 	const orderExists = useCallback((id) => {
 		return orders.some(order => order?._id == id);
@@ -74,17 +70,27 @@ const Listings = () => {
 		setOpenOrdersModal(false);
 	}, []);
 
-	const handleContinue = useCallback(() => {
-		// setOrders([]);
-		// sessionStorage.removeItem('orders');
+	const handleContinue = useCallback((overallPrice) => {
+		if (overallPrice) {
+			const { userName, _id, address } = currUser;
+			const order = {
+				customer: {
+					userName, userId: _id, address,
+				},
+				items: orders.map(({ _id, quantity, salePrice, }) => ({ productId: _id, quantity, price_pp: salePrice, totalPrice: salePrice * quantity, paid: true })),
+				paymentMethod: 'Card',
+				paymentStatus: 'paid',
+				completed: true,
+				totalPrice: overallPrice
+			};
+
+			dispatch(createOrder(order));
+		}
 	}, []);
 
 	const handleView = useCallback((id) => {
 		dispatch(getProduct(id))
-			.then(({ payload }) => {
-				// setModalProduct(payload.product);
-				setOpenProductModal(true);
-			});
+			.then(() => setOpenProductModal(true));
 	}, [dispatch]);
 
 	const newSortOptions = useMemo(() => sortOptions.map(item => ({ ...item, onClick: handleSort })), [sortOptions]);
@@ -100,7 +106,7 @@ const Listings = () => {
 
 			<Orders
 				open={openOrdersModal}
-				onOpenChange={toggleOpenOrdersModal}
+				onOpenChange={() => setOpenOrdersModal(false)}
 				orders={orders}
 				handleAddToCart={handleAddToCart}
 				handleUpdateOrder={handleUpdateOrder}
@@ -111,7 +117,7 @@ const Listings = () => {
 			<FlexBetween className='mb-2 justify-end'>
 				<div className='flex items-center  gap-3 ml-auto'>
 					<div
-						onClick={toggleOpenOrdersModal}
+						onClick={() => setOpenOrdersModal(true)}
 						className='flex border p-1.5 px-2 hover:bg-muted cursor-pointer rounded-sm '
 					>
 						<Badge>{orders.length ? `${orders.length} items selected` : 'empty cart'}</Badge>
@@ -137,6 +143,7 @@ const Listings = () => {
 
 			<div className='auto-fit gap-3 overflow-auto'>
 				{
+					isLoading ? (<Skeleton />) :
 					products.map(item => (
 						<ShoppingCard
 							added={() => orderExists(item._id)}

@@ -12,7 +12,7 @@ const Orders = React.memo(({
 
 	const overall = useMemo(() => {
 		if (orders?.length)
-			return orders?.map(item => (item.quantity * item.salePrice))?.reduce((prev, curr) => (curr += prev));
+			return orders?.map(({ quantity, salePrice }) => (quantity * salePrice))?.reduce((prev, curr) => (curr += prev));
 		else return 0;
 	}, [orders]);
 
@@ -45,7 +45,7 @@ const Orders = React.memo(({
 				</FlexColumn>
 				<DialogFooter className='mt-auto border'>
 					<Button className='w-full self-end' onClick={handleCancel}>Cancel</Button>
-					<Button className='w-full self-end' onClick={handleContinue}>Continue</Button>
+					<Button className='w-full self-end' onClick={() => handleContinue(overall)}>Continue</Button>
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>

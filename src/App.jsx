@@ -20,14 +20,14 @@ function App() {
   const {toast} = useToast();
 
   const {
-    // isAuthenticated, user,
+    isAuthenticated, user,
     isLoading, error } = useSelector(authSelector)
 
-  const isAuthenticated = true;
-  const user = {
-    // role: 'admin',
-    role: 'user',
-  }
+  // const isAuthenticated = true;
+  // const user = {
+  //   // role: 'admin',
+  //   role: 'user',
+  // }
 
   const from = location.state?.from || location.pathname;  
 
