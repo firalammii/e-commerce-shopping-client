@@ -107,8 +107,13 @@ h1 {
 } */
 .auto-fit{
   display: grid;
-  /* grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); */
-    grid-template-columns: repeat(auto-fit, minmax(0, 250px));
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+    /* grid-template-columns: repeat(auto-fit, minmax(0, 250px)); */
+  gap:1rem;
+}
+.auto-skeleton{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
   gap:1rem;
 }
 .offscreen {
@@ -124,4 +129,7 @@ h1 {
 
 .hide {
   display: none;
+}
+.shop-list-h {
+  height: calc(100vh - 143px);
 }

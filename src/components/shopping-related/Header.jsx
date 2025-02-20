@@ -1,5 +1,4 @@
-import { Command, ShoppingCart } from 'lucide-react';
-import React from 'react'
+import { Command } from 'lucide-react';
 import { Dropdown, FlexBetween, FlexCentered } from '../common';
 import { Link, useNavigate } from 'react-router-dom';
 import { iconSize } from '@/data';
@@ -33,9 +32,6 @@ const ShoppingHeader = () => {
 					<Link className='py-1 border px-3 rounded-md' to='/shop/home' >Home</Link>
 				</FlexCentered>
 				<div className='flex items-center justify-end gap-3 w-1/3 pr-2'>
-					<div className='border p-1.5 px-2 hover:bg-background cursor-pointer rounded-sm '>
-						<ShoppingCart />
-					</div>
 					<Dropdown
 						trigger={<Avatar className='border rounded-full' avatarFb={avatarFb} />}
 						title='Account'

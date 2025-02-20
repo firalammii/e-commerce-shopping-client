@@ -21,7 +21,7 @@ function App() {
 
   const {
     isAuthenticated, user,
-    isLoading, error } = useSelector(authSelector)
+    isLoading, } = useSelector(authSelector)
 
   // const isAuthenticated = true;
   // const user = {
@@ -58,7 +58,7 @@ function App() {
     return (<Skeleton className="w-screen h-screen" />)
 
   return (
-    <section className='w-screen h-screen'>
+    <section className=''>
       <Routes>
         <Route path='/'>
           <Route index element={<Home />} />
@@ -67,13 +67,13 @@ function App() {
           <Route path='unauth-page' element={<UnauthPage/>} />
         </Route>
 
-        <Route path='/auth' element={<CheckAuth isAuthenticated={isAuthenticated} user={user} children={<AuthLayout />} />}>
+        <Route path='/auth' element={<CheckAuth isAuthenticated={isAuthenticated} user={user}><AuthLayout /> </CheckAuth>}>
           <Route index element={<Auth />} />
           <Route path='login' element={<Login />} />
           <Route path='register' element={<Register />} />
         </Route>
 
-        <Route path='/admin' element={<CheckAuth isAuthenticated={isAuthenticated} user={user} children={<AdminLayout />} />}>
+        <Route path='/admin' element={<CheckAuth isAuthenticated={isAuthenticated} user={user}><AdminLayout /> </CheckAuth>}>
           <Route index element={<Dashboard />} />
           <Route path='dashboard' element={<Dashboard />} />
           <Route path='features' element={<Features />} />
@@ -82,7 +82,7 @@ function App() {
           <Route path='sales' element={<Sales />} />
         </Route>
 
-        <Route path='/shop' element={<CheckAuth isAuthenticated={isAuthenticated} user={user} children={<ShoppingLayout />} />}>
+        <Route path='/shop' element={<CheckAuth isAuthenticated={isAuthenticated} user={user}><ShoppingLayout /></CheckAuth>}>
           <Route index element={<Listings />} />
           <Route path='home' element={<Listings />} />
           <Route path='features' element={<Features />} />

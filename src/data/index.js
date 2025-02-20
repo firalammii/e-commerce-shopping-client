@@ -19,24 +19,24 @@ export const brands = [
 ];
 
 export const prodCategories = [
-	{ label: "Clothes", value: "clothes" },
+	{ label: "Clothes", value: "clothes", },
 	{ label: "Bags", value: "bags" },
 	{ label: "Education", value: "education" },
-	{ label: "Electronics", value: "electronics" },
+	{ label: "Electronics", value: "electronics", icon: 'kids', emoji: '💻', main: true, },
 	{ label: "Computer", value: "computer" },
 	{ label: "Mobile Phones", value: "mobile phones" },
 	{ label: "Health", value: "health" },
 	{ label: "Fitness", value: "fitness" },
 	{ label: "Jewelry", value: "jewelry" },
 	{ label: "Watch", value: "watch" },
-	{ label: "Men", value: "men" },
-	{ label: "Women", value: "women" },
-	{ label: "Kids", value: "kids" },
+	{ label: "Men", value: "men", icon: 'men', emoji: '🧔🏼‍♂️', main: true, },
+	{ label: "Women", value: "women", icon: 'kids', emoji: '👩🏼', main: true, },
+	{ label: "Kids", value: "kids", icon: 'kids', emoji: '🧒🏼', main: true, },
 	{ label: "Shoes", value: "shoes" },
 	{ label: "Sports", value: "sports" },
 	{ label: "Food & Beverages", value: "food & beverages" },
-	{ label: "Automobiles", value: "automobiles" },
-	{ label: "Perfumes", value: "perfumes" },
+	{ label: "Automobiles", value: "automobiles", icon: 'CarFront', emoji: '🚘', main: true, },
+	{ label: "Perfumes", value: "perfumes", },
 	{ label: "Furniture", value: "furniture" },
 	{ label: "Medicines & Drugs", value: "medicine & drugs" }
 ];
@@ -60,7 +60,7 @@ export const menuDataItems = [
 		label: "dashboard",
 		link: "/admin/dashboard",
 		icon: null,
-		active: false,
+		active: true,
 		filters: []
 	},
 	{

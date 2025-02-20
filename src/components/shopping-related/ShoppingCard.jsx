@@ -4,12 +4,13 @@ import { Button } from '../ui/button';
 import { prodResourceURL } from '@/api/axios';
 import { FlexBetween, FlexCentered, FlexColumn } from '../common';
 import { MoreHorizontal, ShoppingCart } from 'lucide-react';
+import PropTypes from 'prop-types';
 
-const ShoppingCard = React.memo(({ added, item, handleAddToCart, handleView }) => {
+const ShoppingCard = React.memo(function ShoppingCard ({ added, item, handleAddToCart, handleView }) {
 	const [seeDesc, setSeeDesc] = useState(false);
 
 	return (
-		<Card title='click to view' >
+		<Card title='click to view' className=''>
 			<CardHeader onClick={handleView} className='cursor-pointer my-2'>
 				<FlexColumn className='gap-4'>
 					<FlexBetween className='flex justify-between items-center'>
@@ -53,4 +54,10 @@ const ShoppingCard = React.memo(({ added, item, handleAddToCart, handleView }) =
 	);
 });
 
+ShoppingCard.propTypes = {
+	added: PropTypes.func,
+	handleAddToCart: PropTypes.func,
+	handleView: PropTypes.func,
+	item: PropTypes.object
+};
 export default ShoppingCard;

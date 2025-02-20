@@ -1,9 +1,9 @@
-import React from 'react'
 import { Button } from '../ui/button';
 import { LogOut, Menu } from 'lucide-react';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '@/api/slices/authSlice';
 import { useToast } from '@/hooks/use-toast';
+import PropTypes from 'prop-types';
 
 const Header = ({ onOpenChange}) => {
 	const dispatch = useDispatch();
@@ -25,5 +25,7 @@ const Header = ({ onOpenChange}) => {
 		</header>
 	)
 }
-
+Header.propTypes = {
+	onOpenChange: PropTypes.func
+};
 export default Header

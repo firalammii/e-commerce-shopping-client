@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, } from "@/components/ui/sheet";
 import { LayoutDashboard, NotebookPen, ShoppingBasket, UserCog, ChevronDown, ChevronUp, FilterXIcon } from 'lucide-react';
-import { brands, iconSize, initialFiltersData, menuDataItems, prodCategories } from '@/data';
+import { iconSize, initialFiltersData, menuDataItems } from '@/data';
 import { FlexBetween } from '../common';
 import { useDispatch } from 'react-redux';
 import { fetchProducts } from '@/api/slices/admin/productSlice';
@@ -15,9 +15,11 @@ const icons = {
 	sales: <NotebookPen size={iconSize.medium} />,
 }
 
+const sidebarItemsData = JSON.parse(sessionStorage.getItem('adminSidebarItems')) || menuDataItems;
+
 const Sidebar = ({openSidebar, onOpenChange}) => {
 
-	const [sidebarItems, setSidebarItems] = useState(menuDataItems);
+	const [sidebarItems, setSidebarItems] = useState(sidebarItemsData);
 	const [filters, setFilters] = useState(initialFiltersData);
 	const [strict, setStrict] = useState(false);
 
@@ -59,7 +61,8 @@ const Sidebar = ({openSidebar, onOpenChange}) => {
 	};
 
 	const handleSidebarSelection = (label) => {
-		setSidebarItems(prev => prev.map(prevItem => prevItem.label == label ? { ...prevItem, active: !prevItem.active } : { ...prevItem, active: false }));
+		setSidebarItems(sidebarItems.map(item => item.label == label ? { ...item, active: true } : { ...item, active: false }));
+		sessionStorage.setItem('adminSidebarItems', JSON.stringify(sidebarItems));
 		navigate(`/admin/${label}`);
 	};
 
@@ -95,7 +98,7 @@ const Sidebar = ({openSidebar, onOpenChange}) => {
 						<div className={openDropdown ? "transition-max-height max-h-96" : 'transition-max-height max-h-0 '}>
 							<div className='text-sm flex flex-col pb-4 gap-4 max-h-96 border rounded-md overflow-y-auto'>
 								<FlexBetween className='sticky top-0 px-1 py-1 w-11/12 bg-white   border-b'>
-									<h3 className='pl-3 cursor-pointer' onClick={() => handleSidebarSelection(item.label)}>Filter Criteria</h3>
+										<h3 className='pl-3 cursor-pointer' onClick={() => handleSidebarSelection(item?.label)}>Filter Criteria</h3>
 									<ClearFilterBtn onClick={() => clearFilters(undefined)} />
 								</FlexBetween>
 									{/* {

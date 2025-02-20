@@ -1,9 +1,8 @@
-import React from 'react'
 import { Outlet } from 'react-router-dom';
 
 const AuthLayout = () => {
 	return (
-		<section className='w-full min-h-screen flex'>
+		<section className='w-screen min-h-screen flex'>
 			<header className='hidden px-12 w-1/2 lg:flex items-center justify-center bg-black'>
 				<div className='max-w-md text-primary-foreground space-y-6 text-center'>
 					<h1 className='text-4xl font-extrabold tracking-tight'>

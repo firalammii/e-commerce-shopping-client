@@ -7,8 +7,9 @@ import { Avatar, FlexCentered, FlexColumn } from '../common';
 import { prodResourceURL } from '@/api/axios';
 import { useSelector } from 'react-redux';
 import { modalProductSelector } from '@/api/slices/admin/productSlice';
+import PropTypes from 'prop-types';
 
-const ProductDetails = React.memo(({ added, open, onOpenChange, handleAddToCart }) => {
+const ProductDetails = React.memo(function ProductDetails ({ added, open, onOpenChange, handleAddToCart }) {
 
 	const modalProduct = useSelector(modalProductSelector);
 
@@ -98,4 +99,10 @@ const ProductDetails = React.memo(({ added, open, onOpenChange, handleAddToCart 
 	);
 })
 
+ProductDetails.propTypes = {
+	added: PropTypes.func,
+	handleAddToCart: PropTypes.func,
+	onOpenChange: PropTypes.func,
+	open: PropTypes.bool
+};
 export default ProductDetails;
